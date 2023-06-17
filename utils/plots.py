@@ -150,11 +150,15 @@ class Annotator:
         # Add rectangle to image (PIL-only)
         self.draw.rectangle(xy, fill, outline, width)
 
-    def text(self, xy, text, txt_color=(255, 255, 255), anchor='top'):
+    def text(self, xy, text, txt_color=(255, 0, 0), anchor='top'):
         # Add text to image (PIL-only)
         if anchor == 'bottom':  # start y from font bottom
             w, h = self.font.getsize(text)  # text width, height
             xy[1] += 1 - h
+        # Draw a white rectangle
+        rect_position = [xy[0], xy[1], xy[0] + w, xy[1] + h]
+        self.draw.rectangle(rect_position, fill="white")
+        # Add the text
         self.draw.text(xy, text, fill=txt_color, font=self.font)
 
     def fromarray(self, im):
