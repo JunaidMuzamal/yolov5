@@ -141,15 +141,6 @@ def run(
             top5i = prob.argsort(0, descending=True)[:5].tolist()  # top 5 indices
             s += f"{', '.join(f'{names[j]} {prob[j]:.2f}' for j in top5i)}, "
 
-            # Write results
-            from PIL import ImageDraw
-
-            # Get the index of the class with the highest probability
-            max_prob_index = prob.argmax()
-
-            # Get the name and probability of this class
-            text = f'{prob[max_prob_index]:.2f} {names[max_prob_index]}'
-
             # Get the index of the class with the highest probability
             max_prob_index = prob.argmax()
 
@@ -162,6 +153,7 @@ def run(
             if save_txt:  # Write to file
                 with open(f'{txt_path}.txt', 'a') as f:
                     f.write(text + '\n')
+
             # Stream results
             im0 = annotator.result()
             if view_img:
