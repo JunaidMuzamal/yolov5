@@ -148,7 +148,7 @@ def run(
             text = f'{names[max_prob_index.item()]}{prob[max_prob_index]:.2f}'
 
             if save_img or view_img:  # Add bbox to image
-                annotator.text((40, 40), text, txt_color=(255, 244, 0))  # Set text color to red
+                annotator.text((40, 40), text, txt_color=(0, 0, 0))  # Set text color to red
 
             if save_txt:  # Write to file
                 with open(f'{txt_path}.txt', 'a') as f:
