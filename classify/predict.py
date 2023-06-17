@@ -59,8 +59,8 @@ def run(
         data=ROOT / 'data/coco128.yaml',  # dataset.yaml path
         imgsz=(224, 224),  # inference size (height, width)
         device='',  # cuda device, i.e. 0 or 0,1,2,3 or cpu
-        view_img=False,  # show results
-        save_txt=False,  # save results to *.txt
+        view_img=True,  # show results
+        save_txt=True,  # save results to *.txt
         nosave=False,  # do not save images/videos
         augment=False,  # augmented inference
         visualize=False,  # visualize features
@@ -142,9 +142,20 @@ def run(
             s += f"{', '.join(f'{names[j]} {prob[j]:.2f}' for j in top5i)}, "
 
             # Write results
-            text = '\n'.join(f'{prob[j]:.2f} {names[j]}' for j in top5i)
+            from PIL import ImageDraw
+
+            # Get the index of the class with the highest probability
+            max_prob_index = prob.argmax()
+
+            # Get the name and probability of this class
+            text = f'{prob[max_prob_index]:.2f} {names[max_prob_index]}'
+
             if save_img or view_img:  # Add bbox to image
-                annotator.text((32, 32), text, txt_color=(255, 255, 255))
+                draw = ImageDraw.Draw(img)
+                text_width, text_height = draw.textsize(text)
+                draw.rectangle([32, 32, 32 + text_width, 32 + text_height], fill="white")
+                annotator.text((32, 32), text, txt_color=(0, 0, 0))
+
             if save_txt:  # Write to file
                 with open(f'{txt_path}.txt', 'a') as f:
                     f.write(text + '\n')
