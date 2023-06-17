@@ -150,16 +150,18 @@ def run(
             # Get the name and probability of this class
             text = f'{prob[max_prob_index]:.2f} {names[max_prob_index]}'
 
+            # Get the index of the class with the highest probability
+            max_prob_index = prob.argmax()
+
+            # Get the name and probability of this class
+            text = f'{prob[max_prob_index]:.2f} {names[max_prob_index.item()]}'
+
             if save_img or view_img:  # Add bbox to image
-                draw = ImageDraw.Draw(img)
-                text_width, text_height = draw.textsize(text)
-                draw.rectangle([32, 32, 32 + text_width, 32 + text_height], fill="white")
-                annotator.text((32, 32), text, txt_color=(0, 0, 0))
+                annotator.text((32, 32), text, txt_color=(255, 0, 0))  # Set text color to red
 
             if save_txt:  # Write to file
                 with open(f'{txt_path}.txt', 'a') as f:
                     f.write(text + '\n')
-
             # Stream results
             im0 = annotator.result()
             if view_img:
