@@ -145,7 +145,7 @@ def run(
             max_prob_index = prob.argmax()
 
             # Get the name and probability of this class
-            text = f'{names[max_prob_index.item()]}{prob[max_prob_index]:.2f}'
+            text = f'Class is {names[max_prob_index.item()]}:: Confidence: {prob[max_prob_index]:.2f}'
 
             if save_img or view_img:  # Add bbox to image
                 annotator.text((40, 40), text, txt_color=(0, 0, 0))  # Set text color to red
